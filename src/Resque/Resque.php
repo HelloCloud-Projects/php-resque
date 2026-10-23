@@ -232,10 +232,12 @@ class Resque
      * @param string $queue The name of the queue to place the job in.
      * @param string $class The name of the class that contains the code to execute the job.
      * @param array $args Any optional arguments that should be passed when the job is executed.
+     * @param bool $trackStatus Accepted for compatibility with php-resque 1.x and ignored: job status
+     *                          tracking is not implemented, the job ID is always returned.
      *
      * @return string|boolean Job ID when the job was created, false if creation was cancelled due to beforeEnqueue
      */
-    public static function enqueue($queue, $class, $args = null)
+    public static function enqueue($queue, $class, $args = null, $trackStatus = false)
     {
         $id = Resque::generateJobId();
         $hookParams = [

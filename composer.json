@@ -31,7 +31,8 @@
 	"autoload": {
 		"psr-4": {
 			"Resque\\": "src/Resque"
-		}
+		},
+		"files": ["src/aliases.php"]
 	},
 	"autoload-dev": {
 		"psr-4": {
