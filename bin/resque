@@ -55,7 +55,7 @@ if (!empty($REDIS_BACKEND)) {
 }
 
 // Set Logging level
-$logLevel = false;
+$logLevel = 'warning';
 $LOGGING = getenv('LOGLEVEL');
 if (!empty($LOGGING)) {
     $logLevel = $LOGGING;

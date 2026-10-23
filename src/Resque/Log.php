@@ -18,7 +18,8 @@ class Log extends \Psr\Log\AbstractLogger
 
     public function __construct($logLevel = 'warning')
     {
-        $this->logLevel = strtolower($logLevel);
+        // Legacy callers pass false/null when no level is configured
+        $this->logLevel = is_string($logLevel) && $logLevel !== '' ? strtolower($logLevel) : 'warning';
     }
 
     /**
