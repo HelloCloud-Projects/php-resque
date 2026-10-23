@@ -4,6 +4,46 @@ php-resque: PHP Background (Resque) Worker
 Resque is a Redis-backed library for creating background jobs, placing
 those jobs on one or more queues, and processing them later.
 
+This package (`hello/php-resque`) is a fork of
+[idanoo/php-resque](https://github.com/idanoo/php-resque), which itself descends
+from [chrisboulton/php-resque](https://github.com/chrisboulton/php-resque). It
+requires **PHP >= 8.3** and is built to be a drop-in replacement for the original
+[resque/php-resque](https://github.com/resque/php-resque) 1.x, so existing
+applications can migrate without rewriting their code.
+
+## Compatibility with resque/php-resque ##
+
+The package declares `replace` for `resque/php-resque`, `chrisboulton/php-resque`
+and `danhunsaker/php-resque`, so Composer installs only this one. Compatibility
+is provided as follows:
+
+* **Global class names** – the legacy classes (`Resque`, `Resque_Job`,
+  `Resque_Worker`, `Resque_Event`, `Resque_Redis`, `Resque_Stat`, `Resque_Log`,
+  `Resque_Failure*`, ...) are lazily aliased to the namespaced classes
+  (`\Resque\Resque`, `\Resque\Job\Job`, ...) by `src/aliases.php`, which Composer
+  loads automatically. Both styles work side by side.
+* **Backend DSN formats** – `Resque::setBackend()` and `REDIS_BACKEND` accept the
+  legacy `host:port` format as well as URIs, with or without authentication:
+
+  ```php
+  Resque::setBackend('redis:6379');                      // legacy
+  Resque::setBackend('redis://redis:6379');              // URI, no auth
+  Resque::setBackend('redis://:password@redis:6379');    // URI, with password
+  ```
+
+  The password is sent on connect and replayed on reconnect, so the extra
+  `Resque::redis()->auth(...)` call used with 1.x is no longer needed.
+* **`Resque::enqueue()` signature** – the 1.x fourth argument (`$trackStatus`) is
+  accepted and ignored, so `Resque::enqueue($queue, $class, $args, true)` keeps
+  working and always returns the job ID. Job status tracking
+  (`Resque_Job_Status`) is not implemented.
+* **Logger** – `Resque\Log` falls back to the `warning` level when given
+  `false`, `null` or an empty level, as legacy code may do.
+
+On top of that the fork keeps its modernisations: PHP 8.3+, PSR-4 autoloading,
+Credis-based connections, TLS and Redis 6+ ACL support, reconnect handling and
+optional per-job forking.
+
 ## Background ##
 
 Resque was developed by the folks at GitHub and written in Ruby. 
@@ -37,12 +77,12 @@ pre and post jobs
 On top of the original fork (chrisboulton/php-resque) I have added:
 
 * Custom log levels
-* PHP7.0+ compatibility
+* PHP 8.3+ compatibility
 
 
 ## Requirements ##
 
-* PHP 8.4+
+* PHP 8.3+
 * phpredis
 * Redis 2.2+
 
@@ -53,7 +93,8 @@ Composer package inside your project.
 
 If you're not familiar with Composer, please see <http://getcomposer.org/>.
 
-1. Run `composer require idanoo/php-resque`.
+1. Run `composer require hello/php-resque` (or, for a VCS install, add the
+   fork's repository to your `composer.json` first).
 
 2. If you haven't already, add the Composer autoload to your project's
    initialization file. (example)
@@ -560,6 +601,7 @@ needing to directly examine the code), have a look at `HOWITWORKS.md`.
 
 ### Past Maintainer / Forked From ###
 
+* @idanoo (this is a fork of idanoo/php-resque)
 * @chrisboulton
 
 ### Others ###
