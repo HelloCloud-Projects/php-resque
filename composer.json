@@ -1,5 +1,5 @@
 {
-	"name": "hello/php-resque",
+	"name": "hellocloud/php-resque",
 	"type": "library",
 	"replace": {
 		"chrisboulton/php-resque":  "*",
@@ -8,12 +8,12 @@
 	},
 	"description": "Redis backed library for creating background jobs and processing them later. Based on resque for Ruby. Originally forked from chrisboulton/php-resque.",
 	"keywords": ["job", "background", "redis", "resque", "php"],
-	"homepage": "https://github.com/idanoo/php-resque",
+	"homepage": "https://github.com/HelloCloud-Projects/php-resque",
 	"license": "MIT",
 	"authors": [
 		{
-			"name": "Daniel Mason",
-			"email": "daniel@m2.nz"
+			"name": "HelloCloud",
+			"email": "support@hellocloud.com.br"
 		}
 	],
 	"require": {
@@ -40,7 +40,7 @@
 		}
 	},
 	"support": {
-		"issues": "https://github.com/idanoo/php-resque/issues",
-		"source": "https://github.com/idanoo/php-resque"
+		"issues": "https://github.com/HelloCloud-Projects/php-resque/issues",
+		"source": "https://github.com/HelloCloud-Projects/php-resque"
 	}
 }
