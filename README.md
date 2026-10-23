@@ -597,7 +597,7 @@ needing to directly examine the code), have a look at `HOWITWORKS.md`.
 ## Contributors ##
 
 ### Current Maintainers ###
-* @idanoo
+* @amsbr
 
 ### Past Maintainer / Forked From ###
 
